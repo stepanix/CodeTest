@@ -11,29 +11,32 @@ import java.util.List;
 /**
  *
  * @author henry
+ * @param <T>
  */
 public class FlattenArray<T> {
-    
-    private final List<Object> arrayOutput = new ArrayList<>();
+
+    private final List<Object> arrayOutput;
     
     public FlattenArray() {
-        
+        arrayOutput = new ArrayList<>();
     }
-    
+
     public List<Object> flattenArray(T[] arrayInput) {
-        
-        for (int i = 0; i < arrayInput.length; i++) {
-            if(isArray(arrayInput[i])) {
-                arrayOutput.add(flattenArray((T[])arrayInput[i]));
+        for (T arrayInputList : arrayInput) {
+            if (isArray(arrayInputList)) {
+                List<Object> flattenedArray = flattenArray((T[]) arrayInputList);
+                arrayOutput.add(flattenedArray);
+                break;
             } else {
-                arrayOutput.add(arrayInput[i]);
+                arrayOutput.add(arrayInputList);
             }
         }
+        System.out.println("" + arrayOutput);
         return arrayOutput;
     }
-    
+
     private boolean isArray(Object obj) {
-        return obj!=null && obj.getClass().isArray();
+        return obj != null && obj.getClass().isArray();
     }
-    
+
 }
